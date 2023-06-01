@@ -1,0 +1,58 @@
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider = "mongodb"
+    url      = env("MONGODB_URI")
+}
+
+model User {
+    id            String         @id @default(auto()) @map("_id") @db.ObjectId
+    name          String?
+    email         String         @unique
+    emailVerified Boolean?
+    password      String
+    Category      Category[]
+    ShoppingItem  ShoppingItem[]
+}
+
+// model Account {
+//     id                String   @id @default(auto()) @map("_id") @db.ObjectId
+//     provider          String
+//     providerAccountId String   @map("provider_account_id")
+//     type              String
+//     userId            String   @db.ObjectId
+//     refresh_token     String?
+//     access_token      String?
+//     expires_at        Int?
+//     token_type        String?
+//     scope             String?
+//     id_token          String?
+//     session_state     String?
+//     createdAt         DateTime @default(now()) @map(name: "created_at")
+//     updatedAt         DateTime @default(now()) @map(name: "updated_at")
+
+//     user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+//     @@unique([provider, providerAccountId])
+// }
+
+model Category {
+    id            String         @id @default(auto()) @map("_id") @db.ObjectId
+    name          String         @unique
+    ShoppingItems ShoppingItem[]
+    userId        String         @db.ObjectId
+    user          User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model ShoppingItem {
+    id          String   @id @default(auto()) @map("_id") @db.ObjectId
+    title       String
+    description String?
+    image       String?
+    userId      String   @db.ObjectId
+    user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+    category    Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+    categoryId  String   @db.ObjectId
+}
