@@ -3,6 +3,7 @@ import { Quicksand } from "next/font/google";
 import ShoppingContextProvider from "@/context/shoppingContext";
 
 import ClientProviders from "./providers";
+import SideNav from "@/components/SideNav";
 
 const inter = Quicksand({ subsets: ["latin"] });
 

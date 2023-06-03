@@ -22,7 +22,7 @@ const Auth: React.FC<AuthProps> = () => {
     });
   };
   const { status, data } = useSession();
-  if (status !== "unauthenticated") {
+  if (status !== "unauthenticated" && status !== "loading") {
     return redirect("/items");
   }
 

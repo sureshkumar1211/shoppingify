@@ -32,9 +32,9 @@ async function getData() {
 
 export default async function ItemsPage() {
   const data: any = await getData();
-  if (!data) {
-    return redirect("/login");
-  }
+  // if (!data) {
+  //   return redirect("/login");
+  // }
 
   const renderShoppingList = () => {
     return data?.map((category) => {
