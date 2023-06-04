@@ -6,6 +6,7 @@ import ShoppingListItem from "./ShoppingListItem";
 import { useQuery } from "@tanstack/react-query";
 import { getShoppingHistory } from "@/app/actions/getShoppingHistory";
 import { getDateFromDateTime } from "@/utils/dateTimeConverter";
+import { getItemsWithCategories } from "@/utils/getItemsWithCategories";
 
 const ShoppingHistoryDetails: React.FC<any> = ({
   id,
@@ -18,28 +19,30 @@ const ShoppingHistoryDetails: React.FC<any> = ({
 
   if (isLoading) return <p>Loading...</p>;
 
-  const renderShoppingListItems = () => {
-    return data?.shoppingItems?.map((item, index) => (
-      <div
-        key={index}
-        className="mt-4 grid grid-cols-4 items-start gap-y-6 gap-x-4"
-      >
-        <ShoppingListItem {...item} />
-      </div>
+  const renderShoppingListItems = (shoppingItems) => {
+    return shoppingItems?.map((item, index) => (
+      <ShoppingListItem key={index} {...item} type="history" />
     ));
   };
-  //   const renderShoppingList = () => {
-  //     return data?.shoppingItems.map((category) => {
-  //       return (
-  //         <article className="mt-10" key={category.id}>
-  //           <h5 className="text-lg font-medium">{category.name}</h5>
-  //           <div className="mt-4 grid grid-cols-4 items-start gap-y-6 gap-x-4">
-  //             {renderShoppingListItems(category.ShoppingItems)}
-  //           </div>
-  //         </article>
-  //       );
-  //     });
-  //   };
+
+  const renderCategoriesWithItems = () => {
+    const categories = getItemsWithCategories(data?.purchaseItems);
+    return Object.keys(categories).map((category, index) => {
+      const shoppingItems = categories[category];
+      return (
+        <article className="mt-10" key={index}>
+          <h5 className="text-lg font-medium">{category}</h5>
+          <div
+            key={index}
+            className="mt-4 grid grid-cols-4 items-start gap-y-6 gap-x-4"
+          >
+            {renderShoppingListItems(shoppingItems)}
+          </div>
+        </article>
+      );
+    });
+  };
+
   return (
     <>
       <button
@@ -58,7 +61,7 @@ const ShoppingHistoryDetails: React.FC<any> = ({
           </span>
         </div>
       </header>
-      <section>{renderShoppingListItems()}</section>
+      <section>{renderCategoriesWithItems()}</section>
     </>
   );
 };

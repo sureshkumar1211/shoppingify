@@ -4,24 +4,33 @@ import ShoppingHistoryCard from "./ShoppingHistoryCard";
 import ShoppingHistoryDetails from "./ShoppingHistoryDetails";
 import { useQuery } from "@tanstack/react-query";
 import { getShoppingHistories } from "@/app/actions/getShoppingHistories";
+import { sortHistoryByMonth } from "@/utils/sortHistoryByMonth";
 
 const ShoppingHistory: React.FC<any> = () => {
+  const [viewShoppingHistoryId, setViewShoppingHistoryId] =
+    useState<string>("");
   const { data, error, isLoading } = useQuery({
     queryKey: ["shoppingHistories"],
     queryFn: getShoppingHistories,
   });
-  const [viewShoppingHistoryId, setViewShoppingHistoryId] =
-    useState<string>("");
   if (isLoading) return <p>Loading</p>;
+
   const renderShoppingHistory = () => {
-    return data.map((item) => {
+    const histories = sortHistoryByMonth(data);
+    return Object.keys(histories).map((key, index) => {
+      const monthHistories = histories[key];
       return (
-        <div key={item.id} className="flex flex-col gap-4">
-          <h5 className="text-xs font-medium">August 2020</h5>
-          <ShoppingHistoryCard
-            {...item}
-            setViewShoppingHistoryId={setViewShoppingHistoryId}
-          />
+        <div key={index} className="flex flex-col gap-4">
+          <h5 className="text-xs font-medium">{key}</h5>
+          {monthHistories.map((history) => {
+            return (
+              <ShoppingHistoryCard
+                key={history.id}
+                {...history}
+                setViewShoppingHistoryId={setViewShoppingHistoryId}
+              />
+            );
+          })}
         </div>
       );
     });

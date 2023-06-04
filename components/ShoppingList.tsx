@@ -17,7 +17,7 @@ const ShoppingList: React.FC<ShoppingListProps> = ({ title, items }) => {
   });
   const renderShoppingListItems = (shoppingItems) => {
     return shoppingItems?.map((item, index) => (
-      <ShoppingListItem key={index} {...item} />
+      <ShoppingListItem key={index} {...item} type="list" />
     ));
   };
   const renderShoppingList = () => {

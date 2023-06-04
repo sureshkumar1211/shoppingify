@@ -57,13 +57,22 @@ model ShoppingItem {
     category    Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
     categoryId  String   @db.ObjectId
 
-    shoppingHistoryIDs String[]          @db.ObjectId
-    shoppingHistories  ShoppingHistory[] @relation(fields: [shoppingHistoryIDs], references: [id])
+    purchaseIDs   String[]       @db.ObjectId
+    purchaseItems PurshaseItem[]
 }
 
 enum ShoppingStatus {
     completed
     cancelled
+}
+
+model PurshaseItem {
+    id                String           @id @default(auto()) @map("_id") @db.ObjectId
+    shoppingId        String           @db.ObjectId
+    shoppingItem      ShoppingItem     @relation(fields: [shoppingId], references: [id])
+    quantity          Int
+    shoppingHistoryId String?          @db.ObjectId
+    ShoppingHistory   ShoppingHistory? @relation(fields: [shoppingHistoryId], references: [id])
 }
 
 model ShoppingHistory {
@@ -72,7 +81,7 @@ model ShoppingHistory {
     status        ShoppingStatus
     userId        String         @db.ObjectId
     user          User           @relation(fields: [userId], references: [id], onDelete: Cascade)
-    shoppingIds   String[]       @db.ObjectId
-    shoppingItems ShoppingItem[] @relation(fields: [shoppingIds], references: [id])
+    purchaseIds   String[]       @db.ObjectId
     createdAt     DateTime       @default(now())
+    purchaseItems PurshaseItem[]
 }

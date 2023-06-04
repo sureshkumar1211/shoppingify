@@ -1,5 +1,6 @@
 "use client";
 
+import { usePathname } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import React from "react";
@@ -9,6 +10,13 @@ import AssessmentOutlinedIcon from "@mui/icons-material/AssessmentOutlined";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 
 const SideNav = () => {
+  const pathName = usePathname();
+  const activeClass =
+    "before:absolute before:left-0 before:w-[6px] before:h-full relative before:rounded-tr-[4px] before:rounded-br-[4px] before:bg-primary-theme-color";
+  const isActive = (link) => {
+    debugger;
+    return pathName === `/${link}`;
+  };
   return (
     <div className="w-[93px] bg-white h-screen flex flex-col justify-between">
       {/* logo */}
@@ -27,21 +35,30 @@ const SideNav = () => {
       <nav className="flex flex-col gap-5">
         <Link
           href={"/items"}
-          className="before:absolute before:left-0 before:w-[6px] before:h-full relative before:rounded-tr-[4px] before:rounded-br-[4px] before:bg-primary-theme-color w-full h-[45px] flex justify-center items-center cursor-pointer"
+          className={
+            "w-full h-[45px] flex justify-center items-center cursor-pointer " +
+            (isActive("items") ? activeClass : "")
+          }
           title="items"
         >
           <FormatListBulletedIcon className="text-xl" />
         </Link>
         <Link
           href={"/history"}
-          className="w-full h-[45px] flex justify-center items-center cursor-pointer"
+          className={
+            "w-full h-[45px] flex justify-center items-center cursor-pointer " +
+            (isActive("history") ? activeClass : "")
+          }
           title="history"
         >
           <ReplayIcon className="text-xl" />
         </Link>
         <Link
           href={"/statistics"}
-          className="w-full h-[45px] flex justify-center items-center cursor-pointer"
+          className={
+            "w-full h-[45px] flex justify-center items-center cursor-pointer " +
+            (isActive("statistics") ? activeClass : "")
+          }
           title="statistics"
         >
           <AssessmentOutlinedIcon className="text-xl" />

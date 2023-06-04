@@ -48,7 +48,7 @@ const ShoppingSidebarControls: React.FC = ({}) => {
         return <ShoppingCartList />;
     }
   };
-  return <section className="basis-[25%]">{renderSidebarAction()}</section>;
+  return <section className="w-[25%]">{renderSidebarAction()}</section>;
 };
 
 export default ShoppingSidebarControls;

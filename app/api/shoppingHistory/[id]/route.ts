@@ -14,7 +14,23 @@ export async function GET(req: NextRequest) {
     select: {
       title: true,
       createdAt: true,
-      shoppingItems: true,
+      purchaseItems: {
+        select: {
+          id: true,
+          quantity: true,
+          shoppingItem: {
+            select: {
+              id: true,
+              title: true,
+              category: {
+                select: {
+                  name: true,
+                },
+              },
+            },
+          },
+        },
+      },
     },
   });
 

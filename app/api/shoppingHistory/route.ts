@@ -21,3 +21,18 @@ export async function GET() {
   });
   return NextResponse.json(shoppingHistory);
 }
+export async function POST(req: Request) {
+  const body = await req.json();
+  const session: any = await getServerSession(nextAuthOptions);
+  const shoppingHistory = await prisma.shoppingHistory.create({
+    data: {
+      userId: session.userId,
+      title: body.title,
+      status: body.status,
+      purchaseItems: {
+        create: body.purchaseItems,
+      },
+    },
+  });
+  return NextResponse.json(shoppingHistory);
+}

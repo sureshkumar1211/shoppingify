@@ -6,9 +6,14 @@ async function main() {
   // const shoppingHistory = await prisma.shoppingHistory.create({
   //   data: {
   //     userId: "6476c49e9aa0419172d0d901",
-  //     title: "Summer spl",
+  //     title: "Summer-3 spl",
   //     status: "completed",
-  //     shoppingIds: ["64779ecbf10401ba5720bceb"],
+  //     purchaseItems: {
+  //       create: [
+  //         { quantity: 2, shoppingId: "64779ecbf10401ba5720bceb" },
+  //         { quantity: 2, shoppingId: "6477a199f10401ba5720bcf5" },
+  //       ],
+  //     },
   //   },
   // });
   const shoppingHistory = await prisma.shoppingHistory.findMany({
@@ -22,7 +27,7 @@ async function main() {
       id: true,
       createdAt: true,
       status: true,
-      shoppingItems: true,
+      purchaseItems: true,
     },
   });
   console.log(JSON.stringify(shoppingHistory));
