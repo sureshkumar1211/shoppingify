@@ -9,6 +9,7 @@ export interface IShoppingItem {
   description: string;
   image?: string;
   category?: string;
+  categoryId?: string;
 }
 export interface ICategories {
   id: string;

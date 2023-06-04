@@ -14,7 +14,6 @@ const SideNav = () => {
   const activeClass =
     "before:absolute before:left-0 before:w-[6px] before:h-full relative before:rounded-tr-[4px] before:rounded-br-[4px] before:bg-primary-theme-color";
   const isActive = (link) => {
-    debugger;
     return pathName === `/${link}`;
   };
   return (

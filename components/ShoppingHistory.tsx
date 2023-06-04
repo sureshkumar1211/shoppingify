@@ -13,7 +13,12 @@ const ShoppingHistory: React.FC<any> = () => {
     queryKey: ["shoppingHistories"],
     queryFn: getShoppingHistories,
   });
-  if (isLoading) return <p>Loading</p>;
+  if (isLoading)
+    return (
+      <section className="px-[80px] justify-center overflow-y-auto pt-[38px] basis-[75%] flex items-center">
+        <p>Loading</p>
+      </section>
+    );
 
   const renderShoppingHistory = () => {
     const histories = sortHistoryByMonth(data);

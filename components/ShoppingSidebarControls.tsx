@@ -38,6 +38,7 @@ const ShoppingSidebarControls: React.FC = ({}) => {
             id={currentShoppingItemDetails?.id as string}
             name={currentShoppingItemDetails?.title as string}
             category={currentShoppingItemDetails?.category as string}
+            categoryId={currentShoppingItemDetails?.categoryId as string}
             imageSrc={currentShoppingItemDetails?.image as string}
             note={currentShoppingItemDetails?.description}
           />

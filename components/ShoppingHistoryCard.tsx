@@ -24,7 +24,7 @@ const ShoppingHistoryCard = ({
             {getDateFromDateTime(createdAt).localeString}
           </span>
         </div>
-        <Badge text={status} variant="blue" />
+        <Badge text={status} variant={status == "completed" ? "blue" : "red"} />
         <ChevronRightIcon className="text-primary-theme-color font-medium" />
       </div>
     </div>
