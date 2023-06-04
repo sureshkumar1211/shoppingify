@@ -8,13 +8,14 @@ datasource db {
 }
 
 model User {
-    id            String         @id @default(auto()) @map("_id") @db.ObjectId
-    name          String?
-    email         String         @unique
-    emailVerified Boolean?
-    password      String
-    Category      Category[]
-    ShoppingItem  ShoppingItem[]
+    id              String            @id @default(auto()) @map("_id") @db.ObjectId
+    name            String?
+    email           String            @unique
+    emailVerified   Boolean?
+    password        String
+    Category        Category[]
+    ShoppingItem    ShoppingItem[]
+    ShoppingHistory ShoppingHistory[]
 }
 
 // model Account {
@@ -55,4 +56,32 @@ model ShoppingItem {
     user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
     category    Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
     categoryId  String   @db.ObjectId
+
+    purchaseIDs   String[]       @db.ObjectId
+    purchaseItems PurshaseItem[]
+}
+
+enum ShoppingStatus {
+    completed
+    cancelled
+}
+
+model PurshaseItem {
+    id                String           @id @default(auto()) @map("_id") @db.ObjectId
+    shoppingId        String           @db.ObjectId
+    shoppingItem      ShoppingItem     @relation(fields: [shoppingId], references: [id])
+    quantity          Int
+    shoppingHistoryId String?          @db.ObjectId
+    ShoppingHistory   ShoppingHistory? @relation(fields: [shoppingHistoryId], references: [id])
+}
+
+model ShoppingHistory {
+    id            String         @id @default(auto()) @map("_id") @db.ObjectId
+    title         String
+    status        ShoppingStatus
+    userId        String         @db.ObjectId
+    user          User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+    purchaseIds   String[]       @db.ObjectId
+    createdAt     DateTime       @default(now())
+    purchaseItems PurshaseItem[]
 }

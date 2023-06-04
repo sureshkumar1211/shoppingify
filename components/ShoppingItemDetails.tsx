@@ -8,6 +8,7 @@ interface ShoppingItemDetailsProps {
   name: string;
   note?: string;
   category: string;
+  categoryId?: string;
   imageSrc: string;
 }
 
@@ -16,6 +17,7 @@ const ShoppingItemDetails: React.FC<ShoppingItemDetailsProps> = ({
   name,
   category,
   imageSrc,
+  categoryId,
   note,
 }) => {
   const { updateSidebarActionType, savePurchaseItem } =
@@ -38,14 +40,14 @@ const ShoppingItemDetails: React.FC<ShoppingItemDetailsProps> = ({
         <span>back</span>
       </button>
       <section className="h-[80vh] overflow-y-auto">
-        <img className="rounded-2xl" src={imageSrc} alt="" />
+        <img className="rounded-2xl mt-5" src={imageSrc} alt="" />
         <div className="mt-8 flex flex-col gap-3">
           <h6 className="text-[#C1C1C4] text-xs font-medium">name</h6>
           <h3 className="text-xl font-medium">{name}</h3>
         </div>
         <div className="mt-8 flex flex-col gap-3">
           <h6 className="text-[#C1C1C4] text-xs font-medium">category</h6>
-          <h3 className="text-xl font-medium">{category}</h3>
+          <h3 className="text-xl font-medium">{categoryId}</h3>
         </div>
         <div className="mt-8 flex flex-col gap-3">
           <h6 className="text-[#C1C1C4] text-xs font-medium">note</h6>
